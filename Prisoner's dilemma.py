@@ -181,15 +181,19 @@ prisoners_number_type = {
     Maly_pes : 0
 }
 
-#
+#CLASSIC PRISONNER'S DILEMMA
 #number of interrogations
 itr_num = 3
+#Do you want to run "CLASSICAL PRISONNER'S DILEMMA"? True / False
+classic_run = False
 
 #GENERATINS - EVOLUTION
 #population change
 change_num = 5
 population_red = 0.4
 population_inc = 0.1
+#Do you want to run "GENERATINS - EVOLUTION"? True / False
+generations_run = True
 
 #prisoners1[0].years += 0
 #prisoners1[1].years += 0
@@ -297,24 +301,25 @@ n = round(population_red * prisoners_len)
 n2 = population_inc * prisoners_len
 prisoners_classes_num = []
 
-print("n = " + str(n))
-print("len(prisoners1) = " + str(len(prisoners1)))
+def generations(interrogation, change_num, prisoners1, iteration, prisoners_len, n, prisoners_classes_num):
+    print("n = " + str(n))
+    print("len(prisoners1) = " + str(len(prisoners1)))
 
-for k in range(change_num):
-    iteration(interrogation, 1, prisoners1)
+    for k in range(change_num):
+        iteration(interrogation, 1, prisoners1)
     
-    print("Po iteraci")
-    print("Iterace " + str(k))
-    for i in prisoners1:
-        print(str(type(i).__name__) + " " + str(i.years))
-    print()
+        print("Po iteraci")
+        print("Iterace " + str(k))
+        for i in prisoners1:
+            print(str(type(i).__name__) + " " + str(i.years))
+        print()
 
     #is_sorted = True #is_sorted algorithm not correct
-    for i in range(n):
+        for i in range(n):
         #is_sorted = True
-        for j in range(0, prisoners_len-i-1):
-            if prisoners1[j].years > prisoners1[j + 1].years :
-                prisoners1[j], prisoners1[j + 1] = prisoners1[j + 1], prisoners1[j]
+            for j in range(0, prisoners_len-i-1):
+                if prisoners1[j].years > prisoners1[j + 1].years :
+                    prisoners1[j], prisoners1[j + 1] = prisoners1[j + 1], prisoners1[j]
                 
             #    is_sorted = False
 
@@ -325,7 +330,7 @@ for k in range(change_num):
 
         #print("###################")
         #print(prisoners1)
-        prisoners1.pop()
+            prisoners1.pop()
         #print(prisoners1)
         #print("###################")
         
@@ -337,73 +342,105 @@ for k in range(change_num):
         
     
     ##
-    print("Vyřazení nejhoršího")
-    print("Iterace " + str(k))
-    for i in prisoners1:
-        print(str(type(i).__name__) + " " + str(i.years))
-    print()
+        print("Vyřazení nejhoršího")
+        print("Iterace " + str(k))
+        for i in prisoners1:
+            print(str(type(i).__name__) + " " + str(i.years))
+        print()
     ##
     
-    for i in range(n):
+        for i in range(n):
         #is_sorted = True
-        for j in range(len(prisoners1)-1, 0+i, -1):
-            if prisoners1[j].years < prisoners1[j - 1].years :
-                prisoners1[j], prisoners1[j - 1] = prisoners1[j - 1], prisoners1[j]
+            for j in range(len(prisoners1)-1, 0+i, -1):
+                if prisoners1[j].years < prisoners1[j - 1].years :
+                    prisoners1[j], prisoners1[j - 1] = prisoners1[j - 1], prisoners1[j]
                 
                 #is_sorted = False
         #if is_sorted == True:
         #    break
     
     ##
-    print("Seřazení - od nejmenšího:")
-    print("Iterace " + str(k))
-    for i in prisoners1:
-        print(str(type(i).__name__) + " " + str(i.years))
-    print()
+        print("Seřazení - od nejmenšího:")
+        print("Iterace " + str(k))
+        for i in prisoners1:
+            print(str(type(i).__name__) + " " + str(i.years))
+        print()
     ##
     
-    for i in range(n):
-        prisoners1.append(type(prisoners1[0+i])())
+        for i in range(n):
+            prisoners1.append(type(prisoners1[0+i])())
     
     ##
-    print("Přidání nejlepšího:")
-    print("Iterace " + str(k))
-    for i in prisoners1:
-        print(str(type(i).__name__) + " " + str(i.years))
-    print()
+        print("Přidání nejlepšího:")
+        print("Iterace " + str(k))
+        for i in prisoners1:
+            print(str(type(i).__name__) + " " + str(i.years))
+        print()
     ##
 
     #Number of prisoners in classes + Reset years
-    prisoners_classes = []
-    for i in prisoners1:
-        prisoners_classes.append(str(type(i).__name__))
-        i.years = 0
-    prisoners_classes_num.append(Counter(prisoners_classes))
+        prisoners_classes = []
+        for i in prisoners1:
+            prisoners_classes.append(str(type(i).__name__))
+            i.years = 0
+        prisoners_classes_num.append(Counter(prisoners_classes))
     #print(Counter(mylist))
-    print("k + " + str(k))
+    #print("k + " + str(k))
     
     
 
-print(prisoners_classes_num)
+    print(prisoners_classes_num)
 
 
 #print(prisoners1)
-print()
-for i in prisoners1:
-    print(i.years)
+    print()
+    for i in prisoners1:
+        print(i.years)
+
+
+
+if generations_run:
+    generations(interrogation, change_num, prisoners1, iteration, prisoners_len, n, prisoners_classes_num)
+
+
+if classic_run:
+    iteration(interrogation, itr_num, prisoners1)
+
+    #makes graph
+    #TD: repair - if more than 1 instance of the same class - only one char
+    x = []#"Prvni", "Druhy", "Trati", "Ctvrty", "P", "S", "S", "O"
+    y = []
+    for i in prisoners1:
+        print(str(type(i).__name__) + " " + str(i.years))
+    
+        if not x:
+            x.append(str(type(i).__name__))##
+            y.append(i.years)###########
+        else:
+            if str(type(i).__name__) == x[-1]:
+                y[-1] += i.years
+            else:
+                x.append(str(type(i).__name__))##
+                y.append(i.years)###########
+        #print("konec")
+
+    i = 0
+    for sp_class in prisoners_number_type:
+        if int(prisoners_number_type[sp_class]) != 0:
+            y[i] = y[i] / int(prisoners_number_type[sp_class])
+            i += 1
+        
+    print(x)
+    print(y)
+    plt.bar(x, y)
+    plt.show()
 
 
 
 
-exit()
 
-iteration(interrogation, itr_num, prisoners1)
 
 """
-mylist = [1,7,7,7,3,9,9,9,7,9,10,0]   
-print(Counter(mylist))
-"""
-
 #makes graph
 #TD: repair - if more than 1 instance of the same class - only one char
 x = []#"Prvni", "Druhy", "Trati", "Ctvrty", "P", "S", "S", "O"
@@ -432,6 +469,17 @@ print(x)
 print(y)
 plt.bar(x, y)
 plt.show()
+"""
+
+
+
+
+"""
+mylist = [1,7,7,7,3,9,9,9,7,9,10,0]   
+print(Counter(mylist))
+"""
+
+
 
 
 """
