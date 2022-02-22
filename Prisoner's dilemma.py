@@ -181,19 +181,27 @@ prisoners_number_type = {
     Maly_pes : 0
 }
 
-#CLASSIC PRISONNER'S DILEMMA
+#How to use:
+#Set number of prisoners above
+#Set number of iterations
+#Choose which type of run you want
+#If "GENERATINS - EVOLUTION" - Set percentage of the worst prisoners swaped with best
+#
+#
+
 #number of interrogations
 itr_num = 3
+
+#CLASSIC PRISONNER'S DILEMMA
 #Do you want to run "CLASSICAL PRISONNER'S DILEMMA"? True / False
-classic_run = False
+classic_run = True
 
 #GENERATINS - EVOLUTION
-#population change
-change_num = 5
+#percentage of the worst prisoners swaped with best
 population_red = 0.4
-population_inc = 0.1
+
 #Do you want to run "GENERATINS - EVOLUTION"? True / False
-generations_run = True
+generations_run = False
 
 #prisoners1[0].years += 0
 #prisoners1[1].years += 0
@@ -205,7 +213,7 @@ generations_run = True
 #prisoners1[7].years += 0
 
 
-
+change_num = itr_num
 prisoners1 = []
 
 #makes classes into given number of instances 
@@ -284,11 +292,11 @@ print(test[0].years)
 """
 
 ##############################################
-##Celá věc s vyřazováním horších vězňů..?
+##Celá věc s vyřazováním horších vězňů..
 ##############################################
 
+population_inc = 0.1
 
-#TD: Nefunguje, při 60 Kavkách a 2 Podrazácích hned při první iteraci 62 Kavek..?
 #
 #
 #
